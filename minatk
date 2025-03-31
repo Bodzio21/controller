@@ -571,6 +571,43 @@ if LocalPLR.Name ~= Username then
 
         end
 
+-- FIREWORKS:
+if msg:sub(1, 9) == Prefix .. "fireworks" then
+    if player.Name ~= Username and not isAdmin(player.Name) then
+        return
+    end
+    
+    function runCode()
+        local character = LocalPLR.Character
+        if character and character:FindFirstChild("HumanoidRootPart") and character:FindFirstChild("Humanoid") then
+            -- Store original position
+            local originalPosition = character.HumanoidRootPart.CFrame
+            
+            -- Launch into the air
+            local currentPos = character.HumanoidRootPart.Position
+            character.HumanoidRootPart.CFrame = CFrame.new(currentPos.X, currentPos.Y + 100, currentPos.Z)
+            
+            -- Optional: Play an animation if available
+            if character.Humanoid then
+                -- You could add an animation here if desired
+                character.Humanoid.Jump = true
+            end
+            
+            -- Wait for a moment while in the air
+            wait(2)
+            
+            -- Reset to original position
+            character.HumanoidRootPart.CFrame = originalPosition
+        end
+    end
+    
+    specifyBots(msg:sub(11), runCode)
+    
+    if index == 1 then
+        chat("Launched bots into the air!")
+    end
+end
+
         -- SURROUND:
         if msg:sub(1, 9) == Prefix .. "surround" then -- LITERALY COPY PASTE OF ORBIT COMMAND(too lazy srry)
 
